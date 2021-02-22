@@ -1,1 +1,1 @@
-# labenu-full-frontend
+# Projeto Full Stack - Frontend
