@@ -32,9 +32,9 @@ const LoginPage = () => {
         .then((res)=> {
             console.log(res)
             localStorage.setItem('token',res.data.accessToken)
-            // localStorage.setItem('username',res.data.user.username)
+            // localStorage.setItem('nickname',res.data.user.nickname)
             goToFeedPage(history)
-            // alert(`Bem-vinde ${res.data.user.username}! Acesso autorizado.`)
+            // alert(`Bem-vinde ${res.data.user.nickname}! Acesso autorizado.`)
             alert(`Bem-vinde ! Acesso autorizado.`)
         })
         .catch((err)=> {

@@ -5,11 +5,12 @@ import { NavBar, Options, Hello, Title, ButtonStyled, TitleContainer, TitleColor
 import { AppBar, TextField, Grid } from '@material-ui/core'
 import { red, grey } from '@material-ui/core/colors'
 import SearchIcon from '@material-ui/icons/Search'
+import { HistoryTwoTone } from '@material-ui/icons'
 
 const Header = (props) => {
     const history = useHistory()
     const token = localStorage.getItem("token")
-    const username = localStorage.getItem("username")
+    const nickname = localStorage.getItem("nickname")
     const logout = () => {
         if(window.confirm("Deseja sair da área de acesso ao usuário?")){
             localStorage.removeItem("token")
@@ -20,6 +21,7 @@ const Header = (props) => {
     return (
         <AppBar color="inherit" position="fixed">
                 {token ?
+                history.location.pathname==='/feed' ||  history.location.pathname==='/'?
                     <NavBar>
                         <TitleContainer onClick={()=> goToFeedPage(history)}>
                             <Title variant="h3">Insta</Title>
@@ -35,12 +37,23 @@ const Header = (props) => {
                                     onChange={props.onChangeSearch}
                                     value={props.searchInput}
                                     id="input-with-icon-grid"
-                                    label="Busca" />
+                                    label="Busca por autor e título" />
                             </Grid>
                             </Grid>
                         </SearchContainer>
                         <Options>
-                            <Hello style={{ color: red[500] }}>Olá {username}!</Hello>
+                            <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
+                            <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
+                        </Options>
+                    </NavBar>
+                :
+                    <NavBar>
+                        <TitleContainer onClick={()=> goToFeedPage(history)}>
+                            <Title variant="h3">Insta</Title>
+                            <TitleColor variant="h3">Lab</TitleColor>
+                        </TitleContainer>
+                        <Options>
+                            <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
                             <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
                         </Options>
                     </NavBar>
