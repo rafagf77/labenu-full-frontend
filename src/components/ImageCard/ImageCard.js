@@ -28,7 +28,9 @@ const ImageCard = (props) => {
                             <p><b>{props.subtitle}</b></p>
                         </Typography>
                         <PostedContainer>
-                            <PostedText>Postado {timeCalculator()} por <b>{props.author}</b></PostedText>
+                            <PostedText>Postado {timeCalculator()} por <b>{props.nickname}</b></PostedText>
+                            <PostedText>Tags <b>{props.tags}</b></PostedText>
+                            <PostedText>Álbum: <b>{props.collection}</b></PostedText>
                         </PostedContainer>
                     </Typography>
                 </ClickContainer>
@@ -37,4 +39,4 @@ const ImageCard = (props) => {
     )
 }
 
-export default Comment
+export default ImageCard

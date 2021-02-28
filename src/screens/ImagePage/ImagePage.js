@@ -8,25 +8,37 @@ import { useParams } from 'react-router-dom'
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import Axios from 'axios'
+import { BASE_URL } from '../../constants/URLs'
 
 const ImagePage = () => {
     useProtectedPage()
-    const params = useParams()
 
-    // const GetPostDetails = () => {
-    //     Axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labEddit/posts/${params.id}`,
-    //     {
-    //         headers: {
-    //             Authorization: localStorage.getItem("token")
-    //         }
-    //     })
-    //     .then((res)=>{
-    //         setPostDetails(res.data.post)
-    //     })
-    //     .catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }
+    var dayjs = require('dayjs')
+    var advancedFormat = require('dayjs/plugin/advancedFormat')
+    dayjs.extend(advancedFormat)
+
+    const params = useParams()
+    const [postDetails,setPostDetails] = useState([])
+
+    useEffect(()=>{
+        GetPostDetails()
+        // topFunction()
+    },[])
+    
+    const GetPostDetails = () => {
+        Axios.get(`${BASE_URL}/images/get/${params.id}`,
+        {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            setPostDetails(res.data.result)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
 
     // let mybutton = document.getElementById("back-to-top")
     // window.onscroll = function() {scrollFunction()}
@@ -51,13 +63,15 @@ const ImagePage = () => {
             <Header />
             <PostPageContainer>
                 <ImageCard
-                    // key={post.id}
-                    // id={post.id}
-                    // subtitle={post.subtitle}
-                    // author={post.author}
-                    // createdAt={dayjs(post.date).valueOf()}
-                    // file={post.file}
-                    // getPosts={GetPosts}
+                    key={postDetails.id}
+                    id={postDetails.id}
+                    subtitle={postDetails.subtitle}
+                    nickname={postDetails.nickname}
+                    createdAt={dayjs(postDetails.date).valueOf()}
+                    file={postDetails.file}
+                    tags={postDetails.tags}
+                    collection={postDetails.collection}
+                    getPostDetails={GetPostDetails}
                 />
                 {/* <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
                     <KeyboardArrowUp style={{ color: grey[50] }}/>

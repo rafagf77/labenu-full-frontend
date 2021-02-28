@@ -31,7 +31,7 @@ const Post = (props) => {
                             <p><b>{props.subtitle}</b></p>
                         </Typography>
                         <PostedContainer>
-                            <PostedText>Postado {timeCalculator()} por <b>{props.author}</b></PostedText>
+                            <PostedText>Postado {timeCalculator()} por <b>{props.nickname}</b></PostedText>
                         </PostedContainer>
                     </Typography>
                 </ClickContainer>

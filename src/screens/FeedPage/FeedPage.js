@@ -33,7 +33,6 @@ const FeedPage = () => {
             }
         })
         .then((res)=>{
-            console.log(res)
             setPosts(res.data.result)
         })
         .catch((err)=>{
@@ -43,13 +42,11 @@ const FeedPage = () => {
 
     const SearchFilter = (e) => {
         const searchArray = posts.filter((post) => {
-            const title = post.title.toLowerCase()
-            const text = post.text.toLowerCase()
-            const username = post.username.toLowerCase()
+            const subtitle = post.subtitle.toLowerCase()
+            const nickname = post.nickname.toLowerCase()
             return (
-                title.includes(e.target.value.toLowerCase())
-                || text.includes(e.target.value.toLowerCase())
-                || username.includes(e.target.value.toLowerCase())
+                subtitle.includes(e.target.value.toLowerCase())
+                || nickname.includes(e.target.value.toLowerCase())
                 )
              })
         setFilteredPosts(searchArray)
@@ -80,7 +77,7 @@ const FeedPage = () => {
     
     return (
         <div>
-            <Header />
+            <Header onChangeSearch={SearchFilter}/>
             <FeedPageContainer>
                 <FeedContainer>
                     {posts.length===0
@@ -92,14 +89,13 @@ const FeedPage = () => {
                         :
                         searchContent===""
                             ?
-                            // posts.sort((a, b) => a.createdAt < b.createdAt ? - 1 : Number(a.createdAt > b.createdAt)).map(post=> {
                             posts.sort((a, b) => a.date < b.date ? 1:-1).map(post=> {
                                 return(
                                     <Post
                                         key={post.id}
                                         id={post.id}
                                         subtitle={post.subtitle}
-                                        author={post.author}
+                                        nickname={post.nickname}
                                         createdAt={dayjs(post.date).valueOf()}
                                         file={post.file}
                                         getPosts={GetPosts}
@@ -115,7 +111,7 @@ const FeedPage = () => {
                                             key={post.id}
                                             id={post.id}
                                             subtitle={post.subtitle}
-                                            author={post.author}
+                                            nickname={post.nickname}
                                             createdAt={dayjs(post.date).valueOf()}
                                             file={post.file}
                                             getPosts={GetPosts}

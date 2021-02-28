@@ -33,9 +33,9 @@ const SignUpPage = () => {
         axios.post(`${BASE_URL}/users/signup`,body)
         .then((res)=> {
             localStorage.setItem('token',res.data.accessToken)
-            // localStorage.setItem('username',res.data.user.username)
+            // localStorage.setItem('nickname',res.data.user.nickname)
             goToFeedPage(history)
-            // alert(`Bem-vinde ${res.data.user.username}! Cadastro criado com sucesso.`)
+            // alert(`Bem-vinde ${res.data.user.nickname}! Cadastro criado com sucesso.`)
             alert(`Bem-vinde ! Cadastro criado com sucesso.`)
         })
         .catch((err)=> {
