@@ -1,6 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { goToLoginPage, goToFeedPage, goToSignUpPage } from '../../router/Coordinator'
+import { goToLoginPage, goToFeedPage, goToSignUpPage, goToPostPage } from '../../router/Coordinator'
 import { NavBar, Options, Hello, Title, ButtonStyled, TitleContainer, TitleColor, SearchContainer } from './styles'
 import { AppBar, TextField, Grid } from '@material-ui/core'
 import { red, grey } from '@material-ui/core/colors'
@@ -16,6 +16,10 @@ const Header = (props) => {
             localStorage.removeItem("token")
             goToLoginPage(history)
         }
+    }
+
+    const post = () => {
+            goToPostPage(history)
     }
 
     return (
@@ -44,6 +48,7 @@ const Header = (props) => {
                         <Options>
                             <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
                             <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
+                            <ButtonStyled style={{ color: grey[50], backgroundColor: red[500] }} variant="contained" onClick={post}>Postar</ButtonStyled>
                         </Options>
                     </NavBar>
                 :
@@ -55,6 +60,7 @@ const Header = (props) => {
                         <Options>
                             <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
                             <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
+                            <ButtonStyled style={{ color: grey[50], backgroundColor: red[500] }} variant="contained" onClick={post}>Postar</ButtonStyled>
                         </Options>
                     </NavBar>
                 :

@@ -7,11 +7,15 @@ import { Button, TextField, Typography, CircularProgress } from '@material-ui/co
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import Axios from 'axios'
+import { BASE_URL } from '../../constants/URLs'
+import { goToFeedPage } from '../../router/Coordinator'
+import { useHistory } from 'react-router-dom'
 
 const PostPage = () => {
     useProtectedPage()
-
-    const {form, onChange, resetState} = useForm({ text: "", title: "" })
+    const history = useHistory()
+    const [tags, setTags] = useState([])
+    const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collection: "", tags: "" })
 
     const handleInputChange = (event) => {
         const { value, name } = event.target
@@ -19,28 +23,40 @@ const PostPage = () => {
     }
 
     useEffect(()=>{
-        // setInterval(updatePage, 180000)
-        // GetPostDetails()
         // topFunction()
     },[])
 
-    const GetTags = () => {
-        // Axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labEddit/posts/${params.id}`,
-        // {
-        //     headers: {
-        //         Authorization: localStorage.getItem("token")
-        //     }
-        // })
-        // .then((res)=>{
-        //     setPostDetails(res.data.post)
-        // })
-        // .catch((err)=>{
-        //     console.log(err)
-        // })
+    const inputTags = (event) => {
+        if (event.keyCode === 13) {
+            event.preventDefault()
+            setTags([ ...tags, form.tags ])
+            // resetState()
+          }
     }
-
-    const SendImage = () => {
-        
+    console.log(tags)
+    const SendImage = (event) => {
+        event.preventDefault()
+        const body = {
+                "subtitle": form.subtitle,
+                "file": form.file,
+                "collection": form.collection,
+                "tags": tags
+        }
+        console.log(body)
+        Axios.post(`${BASE_URL}/images/post`, body,
+        {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            alert("Imagem postada com sucesso")
+            resetState()
+            goToFeedPage(history)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
     
     return (
@@ -49,18 +65,52 @@ const PostPage = () => {
                 <PostPageContainer>
                 <NewCommentContainer onSubmit={SendImage}>
                     <TextField
-                        name='text'
-                        value={form.text}
-                        label="Novo Comentário"
+                        name="subtitle"
+                        value={form.subtitle}
+                        label="Título"
                         variant="outlined"
                         color="primary"
                         style={{ backgroundColor: grey[50] }}
                         multiline
                         required
                         onChange={handleInputChange}
-                        placeholder="Escreva um comentário aqui"
+                        placeholder="Escreva um título aqui"
                     />
-                    <Button type="submit" type="submit" variant="contained" color="primary">Enviar comentário</Button>
+                    <TextField
+                        name="file"
+                        value={form.file}
+                        label="Foto"
+                        variant="outlined"
+                        color="primary"
+                        style={{ backgroundColor: grey[50] }}
+                        required
+                        onChange={handleInputChange}
+                        placeholder="Cole o caminho da foto aqui"
+                    />
+                    <TextField
+                        name="collection"
+                        value={form.collection}
+                        label="Álbum"
+                        variant="outlined"
+                        color="primary"
+                        style={{ backgroundColor: grey[50] }}
+                        required
+                        onChange={handleInputChange}
+                        placeholder="Escreva o nome do álbum aqui"
+                    />
+                    <TextField
+                        name="tags"
+                        value={form.tags}
+                        label="Etiquetas"
+                        variant="outlined"
+                        color="primary"
+                        style={{ backgroundColor: grey[50] }}
+                        required
+                        onChange={handleInputChange}
+                        onKeyDown={inputTags}
+                        placeholder="Escreva o nome da etiqueta e aperte Enter para incluí-la"
+                    />
+                    <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
                 </NewCommentContainer>
             </PostPageContainer>
         </div>
