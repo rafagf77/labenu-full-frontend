@@ -41,6 +41,7 @@ const ImagePage = () => {
         })
     }
 
+
     // let mybutton = document.getElementById("back-to-top")
     // window.onscroll = function() {scrollFunction()}
     

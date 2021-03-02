@@ -1,11 +1,16 @@
 import React from 'react'
 import { PostContainer, CountContainer, VotesContainer, ClickContainer, PostedContainer, PostedText } from './styles'
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
-import { IconButton, Card, Typography } from '@material-ui/core'
+import { IconButton, Card, Button, Typography } from '@material-ui/core'
 import Axios from 'axios'
-import { green, red } from '@material-ui/core/colors'
+import { grey, red } from '@material-ui/core/colors'
+import { goToFeedPage } from '../../router/Coordinator'
+import { useHistory } from 'react-router-dom'
+import { BASE_URL } from '../../constants/URLs'
+import { ButtonStyled } from './styles'
 
 const ImageCard = (props) => {
+    const history = useHistory()
 
     const timeCalculator = () => {
         const timeCalc=Math.round((Date.now()-props.createdAt))
@@ -16,6 +21,25 @@ const ImageCard = (props) => {
             } else {
                 return 'há ' + ((Math.round(timeCalc/86400000)) - 1) + ' dias'
         } 
+    }
+
+    const RemoveImage = (id) => {
+        if (window.confirm("Deseja apagar esta imagem?")){
+            Axios.delete(`${BASE_URL}/images/del/${id}`,
+            {
+                headers: {
+                    Authorization: localStorage.getItem("token")
+                }
+            })
+            .then((res)=>{
+                alert("Imagem removida")
+                goToFeedPage(history)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
+
     }
 
     return (
@@ -31,6 +55,7 @@ const ImageCard = (props) => {
                             <PostedText>Postado {timeCalculator()} por <b>{props.nickname}</b></PostedText>
                             <PostedText>Tags <b>{props.tags}</b></PostedText>
                             <PostedText>Álbum: <b>{props.collection}</b></PostedText>
+                            <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveImage(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>
                     </Typography>
                 </ClickContainer>
