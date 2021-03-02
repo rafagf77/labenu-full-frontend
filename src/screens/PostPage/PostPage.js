@@ -14,7 +14,6 @@ import { useHistory } from 'react-router-dom'
 const PostPage = () => {
     useProtectedPage()
     const history = useHistory()
-    const [tags, setTags] = useState([])
     const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collection: "", tags: "" })
 
     const handleInputChange = (event) => {
@@ -26,23 +25,21 @@ const PostPage = () => {
         // topFunction()
     },[])
 
-    const inputTags = (event) => {
-        if (event.keyCode === 13) {
-            event.preventDefault()
-            setTags([ ...tags, form.tags ])
-            // resetState()
-          }
-    }
-    console.log(tags)
     const SendImage = (event) => {
         event.preventDefault()
+
+        let tags = form.tags.split(" ")
+        let i
+        for(i=0;i<tags.length;i++) {
+            tags[i]=tags[i].replace("#","")
+        }
+
         const body = {
                 "subtitle": form.subtitle,
                 "file": form.file,
                 "collection": form.collection,
                 "tags": tags
         }
-        console.log(body)
         Axios.post(`${BASE_URL}/images/post`, body,
         {
             headers: {
@@ -107,8 +104,7 @@ const PostPage = () => {
                         style={{ backgroundColor: grey[50] }}
                         required
                         onChange={handleInputChange}
-                        onKeyDown={inputTags}
-                        placeholder="Escreva o nome da etiqueta e aperte Enter para incluí-la"
+                        placeholder="Escreva os nomes das etiquetas separados com espaço"
                     />
                     <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
                 </NewCommentContainer>

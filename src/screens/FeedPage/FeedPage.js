@@ -74,7 +74,7 @@ const FeedPage = () => {
     function updatePage() {
         GetPosts()
     }
-    
+    console.log(posts)
     return (
         <div>
             <Header onChangeSearch={SearchFilter}/>
