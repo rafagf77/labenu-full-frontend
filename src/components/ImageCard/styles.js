@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { CardContent } from '@material-ui/core'
+import { CardContent, Button } from '@material-ui/core'
 
 export const PostContainer = styled.div `
     display: flex;
@@ -42,4 +42,8 @@ export const PostedText = styled.p `
         margin: 0;
         padding: 0;
     }
+`
+export const ButtonStyled = styled(Button) `
+    height: 4vh;
+    margin-left: 10px;
 `
