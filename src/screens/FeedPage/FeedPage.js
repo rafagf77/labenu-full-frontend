@@ -22,7 +22,7 @@ const FeedPage = () => {
     useEffect(()=>{
         setInterval(updatePage, 180000)
         GetPosts()
-        // topFunction()
+        topFunction()
     },[])
 
     const GetPosts = () => {
@@ -44,9 +44,11 @@ const FeedPage = () => {
         const searchArray = posts.filter((post) => {
             const subtitle = post.subtitle.toLowerCase()
             const nickname = post.nickname.toLowerCase()
+            const tags = post.tags
             return (
                 subtitle.includes(e.target.value.toLowerCase())
                 || nickname.includes(e.target.value.toLowerCase())
+                || tags.includes(e.target.value.toLowerCase())
                 )
              })
         setFilteredPosts(searchArray)
@@ -66,10 +68,10 @@ const FeedPage = () => {
     //     }
     // }
 
-    // function topFunction() {
-    //     document.body.scrollTop = 0;
-    //     document.documentElement.scrollTop = 0;
-    // }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
     
     function updatePage() {
         GetPosts()
@@ -96,6 +98,7 @@ const FeedPage = () => {
                                         id={post.id}
                                         subtitle={post.subtitle}
                                         nickname={post.nickname}
+                                        tags={post.tags}
                                         createdAt={dayjs(post.date).valueOf()}
                                         file={post.file}
                                         getPosts={GetPosts}
@@ -112,6 +115,7 @@ const FeedPage = () => {
                                             id={post.id}
                                             subtitle={post.subtitle}
                                             nickname={post.nickname}
+                                            tags={post.tags}
                                             createdAt={dayjs(post.date).valueOf()}
                                             file={post.file}
                                             getPosts={GetPosts}
