@@ -17,3 +17,7 @@ export const goToImagePage = (history, id) => {
 export const goToSignUpPage = (history) => {
     history.push('/signup')
 }
+
+export const goToCollectionsListPage = (history) => {
+    history.push('/collection')
+}

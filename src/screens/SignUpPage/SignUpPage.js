@@ -9,6 +9,8 @@ import { FormContainer, SignUpPageContainer } from './styles'
 import { Button, TextField } from '@material-ui/core'
 import { grey,red } from '@material-ui/core/colors'
 import { BASE_URL } from '../../constants/URLs'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const SignUpPage = () => {
     useUnprotectedPage()
@@ -35,11 +37,19 @@ const SignUpPage = () => {
             localStorage.setItem('token',res.data.accessToken)
             // localStorage.setItem('nickname',res.data.user.nickname)
             goToFeedPage(history)
-            // alert(`Bem-vinde ${res.data.user.nickname}! Cadastro criado com sucesso.`)
-            alert(`Bem-vinde ! Cadastro criado com sucesso.`)
+            Swal.fire(
+                'Bem-vinde!',
+                'Cadastro criado.',
+                'success'
+            )
         })
         .catch((err)=> {
             console.log(err)
+            Swal.fire(
+                'Problema!',
+                'Verifique os dados e tente novamente',
+                'error'
+            )
         })
     }
 

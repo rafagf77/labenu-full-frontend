@@ -1,25 +1,47 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { goToLoginPage, goToFeedPage, goToSignUpPage, goToPostPage } from '../../router/Coordinator'
+import { goToLoginPage, goToFeedPage, goToSignUpPage, goToPostPage, goToCollectionsListPage } from '../../router/Coordinator'
 import { NavBar, Options, Hello, Title, ButtonStyled, TitleContainer, TitleColor, SearchContainer } from './styles'
 import { AppBar, TextField, Grid } from '@material-ui/core'
 import { red, grey } from '@material-ui/core/colors'
 import SearchIcon from '@material-ui/icons/Search'
 import { HistoryTwoTone } from '@material-ui/icons'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const Header = (props) => {
     const history = useHistory()
     const token = localStorage.getItem("token")
     const nickname = localStorage.getItem("nickname")
     const logout = () => {
-        if(window.confirm("Deseja sair da área de acesso ao usuário?")){
-            localStorage.removeItem("token")
-            goToLoginPage(history)
-        }
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Esta ação encerrará a sessão atual",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, sair!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("token")
+                goToLoginPage(history)
+            }
+          })
     }
 
+    //     if(window.confirm("Deseja sair da área de acesso ao usuário?")){
+    //         localStorage.removeItem("token")
+    //         goToLoginPage(history)
+    //     }
+    // }
+
     const post = () => {
-            goToPostPage(history)
+        goToPostPage(history)
+    }
+    
+    const collection = () => {
+        goToCollectionsListPage(history)
     }
 
     return (
@@ -41,13 +63,14 @@ const Header = (props) => {
                                     onChange={props.onChangeSearch}
                                     value={props.searchInput}
                                     id="input-with-icon-grid"
-                                    label="Busca por autor e título" />
+                                    label="Busca por autor, título e etiquetas" />
                             </Grid>
                             </Grid>
                         </SearchContainer>
                         <Options>
                             <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
                             <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
+                            <ButtonStyled style={{ color: red[500], backgroundColor: grey[300] }} variant="contained" onClick={collection}>Álbuns</ButtonStyled>
                             <ButtonStyled style={{ color: grey[50], backgroundColor: red[500] }} variant="contained" onClick={post}>Postar</ButtonStyled>
                         </Options>
                     </NavBar>
@@ -60,6 +83,7 @@ const Header = (props) => {
                         <Options>
                             <Hello style={{ color: red[500] }}>Olá {nickname}!</Hello>
                             <ButtonStyled style={{ color: red[500], borderColor: red[500] }} variant="outlined" onClick={logout}>Sair</ButtonStyled>
+                            <ButtonStyled style={{ color: red[500], backgroundColor: grey[300] }} variant="contained" onClick={collection}>Álbuns</ButtonStyled>
                             <ButtonStyled style={{ color: grey[50], backgroundColor: red[500] }} variant="contained" onClick={post}>Postar</ButtonStyled>
                         </Options>
                     </NavBar>

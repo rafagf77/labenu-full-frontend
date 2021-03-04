@@ -9,6 +9,8 @@ import { FormContainer, LoginPageContainer } from './styles'
 import { Button, TextField } from '@material-ui/core'
 import { grey, red } from '@material-ui/core/colors'
 import { BASE_URL } from '../../constants/URLs'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const LoginPage = () => {
     useUnprotectedPage()
@@ -34,12 +36,21 @@ const LoginPage = () => {
             localStorage.setItem('token',res.data.accessToken)
             // localStorage.setItem('nickname',res.data.user.nickname)
             goToFeedPage(history)
-            // alert(`Bem-vinde ${res.data.user.nickname}! Acesso autorizado.`)
-            alert(`Bem-vinde ! Acesso autorizado.`)
+            Swal.fire({
+                title: 'Bem-vinde!',
+                text: 'Acesso autorizado.',
+                icon:'success',
+                showConfirmButton: false,
+                timer: 2000
+            })
         })
         .catch((err)=> {
             console.log(err)
-            alert("Digite senha e/ou usuário válidos")
+            Swal.fire(
+                'Problema!',
+                'Senha e/ou usuário não encontrados',
+                'error'
+            )
         })
     }
 

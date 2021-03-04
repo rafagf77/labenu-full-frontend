@@ -10,11 +10,13 @@ import Axios from 'axios'
 import { BASE_URL } from '../../constants/URLs'
 import { goToFeedPage } from '../../router/Coordinator'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const PostPage = () => {
     useProtectedPage()
     const history = useHistory()
-    const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collection: "", tags: "" })
+    const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collections: "", tags: "" })
 
     const handleInputChange = (event) => {
         const { value, name } = event.target
@@ -22,8 +24,13 @@ const PostPage = () => {
     }
 
     useEffect(()=>{
-        // topFunction()
+        topFunction()
     },[])
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
     const SendImage = (event) => {
         event.preventDefault()
@@ -32,12 +39,13 @@ const PostPage = () => {
         let i
         for(i=0;i<tags.length;i++) {
             tags[i]=tags[i].replace("#","")
+            tags[i]="#"+tags[i]
         }
 
         const body = {
                 "subtitle": form.subtitle,
                 "file": form.file,
-                "collection": form.collection,
+                "collections": form.newCollection,
                 "tags": tags
         }
         Axios.post(`${BASE_URL}/images/post`, body,
@@ -47,12 +55,21 @@ const PostPage = () => {
             }
         })
         .then((res)=>{
-            alert("Imagem postada com sucesso")
+            Swal.fire(
+                'Concluído!',
+                'Sua imagem foi postada.',
+                'success'
+            )
             resetState()
             goToFeedPage(history)
         })
         .catch((err)=>{
             console.log(err)
+            Swal.fire(
+                'Problema!',
+                'Sua imagem NÃO foi postada.',
+                'error'
+            )
         })
     }
     
@@ -85,26 +102,28 @@ const PostPage = () => {
                         placeholder="Cole o caminho da foto aqui"
                     />
                     <TextField
-                        name="collection"
-                        value={form.collection}
-                        label="Álbum"
-                        variant="outlined"
-                        color="primary"
-                        style={{ backgroundColor: grey[50] }}
-                        required
-                        onChange={handleInputChange}
-                        placeholder="Escreva o nome do álbum aqui"
-                    />
-                    <TextField
                         name="tags"
                         value={form.tags}
                         label="Etiquetas"
                         variant="outlined"
                         color="primary"
                         style={{ backgroundColor: grey[50] }}
+                        multiline
                         required
                         onChange={handleInputChange}
                         placeholder="Escreva os nomes das etiquetas separados com espaço"
+                    />
+                    <p>Álbuns existentes</p>
+                    <TextField
+                        name="collections"
+                        value={form.newCollection}
+                        label="Novo Álbum"
+                        variant="outlined"
+                        color="primary"
+                        style={{ backgroundColor: grey[50] }}
+                        required
+                        onChange={handleInputChange}
+                        placeholder="Escreva o nome do novo álbum"
                     />
                     <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
                 </NewCommentContainer>

@@ -9,19 +9,19 @@ import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import Axios from 'axios'
 import { BASE_URL } from '../../constants/URLs'
+import Post from '../../components/Post/Post'
+import CollectionCard from '../../components/CollectionCard/CollectionCard'
 
-const ImagePage = () => {
-    useProtectedPage()
-
+const CollectionsListPage = () => {
     var dayjs = require('dayjs')
     var advancedFormat = require('dayjs/plugin/advancedFormat')
     dayjs.extend(advancedFormat)
 
-    const params = useParams()
-    const [postDetails,setPostDetails] = useState([])
+    useProtectedPage()
+    const [collections, setCollections] = useState([])
 
     useEffect(()=>{
-        GetPostDetails()
+        GetAllCollections()
         topFunction()
     },[])
 
@@ -30,16 +30,15 @@ const ImagePage = () => {
         document.documentElement.scrollTop = 0;
     }
     
-    const GetPostDetails = () => {
-        Axios.get(`${BASE_URL}/images/get/${params.id}`,
+    const GetAllCollections = () => {
+        Axios.get(`${BASE_URL}/collections/get/all`,
         {
             headers: {
                 Authorization: localStorage.getItem("token")
             }
         })
         .then((res)=>{
-            console.log(res.data)
-            setPostDetails(res.data.result)
+            setCollections(res.data.result)
         })
         .catch((err)=>{
             console.log(err)
@@ -69,17 +68,26 @@ const ImagePage = () => {
         <div>
             <Header />
             <PostPageContainer>
-                <ImageCard
-                    key={postDetails.id}
-                    id={postDetails.id}
-                    subtitle={postDetails.subtitle}
-                    nickname={postDetails.nickname}
-                    createdAt={dayjs(postDetails.date).valueOf()}
-                    file={postDetails.file}
-                    tags={postDetails.tags}
-                    collections={postDetails.collections}
-                    getPostDetails={GetPostDetails}
-                />
+                {collections.length===0
+                    ? 
+                    <Loading>
+                        <Typography variant="h5" style={{ color: red[500] }}>Carregando...</Typography>
+                        <CircularProgress style={{ color: red[500] }}/>
+                    </Loading>
+                    :
+                    collections.sort((a, b) => a.date < b.date ? 1:-1).map(collection=> {
+                        return(
+                            <CollectionCard
+                                key={collection.id}
+                                id={collection.id}
+                                title={collection.title}
+                                subtitle={collection.subtitle}
+                                createdAt={dayjs(collection.date).valueOf()}
+                            />
+                        )
+                    })
+                }
+
                 {/* <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
                     <KeyboardArrowUp style={{ color: grey[50] }}/>
                 </BackToTop> */}
@@ -88,4 +96,4 @@ const ImagePage = () => {
     )
 }
 
-export default ImagePage
+export default CollectionsListPage

@@ -6,6 +6,7 @@ import LoginPage from '../screens/LoginPage/LoginPage'
 import PostPage from '../screens/PostPage/PostPage'
 import ImagePage from '../screens/ImagePage/ImagePage'
 import SignUpPage from '../screens/SignUpPage/SignUpPage'
+import CollectionsListPage from '../screens/CollectionsListPage/CollectionsListPage'
 
 const Router = () => {
     return (    
@@ -25,6 +26,9 @@ const Router = () => {
                 </Route>
                 <Route exact path = {'/signup'}>
                     <SignUpPage />
+                </Route>
+                <Route exact path = {'/collection'}>
+                    <CollectionsListPage />
                 </Route>
                 <Route>
                     <ErrorPage />
