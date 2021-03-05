@@ -7,6 +7,7 @@ import PostPage from '../screens/PostPage/PostPage'
 import ImagePage from '../screens/ImagePage/ImagePage'
 import SignUpPage from '../screens/SignUpPage/SignUpPage'
 import CollectionsListPage from '../screens/CollectionsListPage/CollectionsListPage'
+import CollectionPage from '../screens/CollectionPage/CollectionPage'
 
 const Router = () => {
     return (    
@@ -27,8 +28,11 @@ const Router = () => {
                 <Route exact path = {'/signup'}>
                     <SignUpPage />
                 </Route>
-                <Route exact path = {'/collection'}>
+                <Route exact path = {'/collections'}>
                     <CollectionsListPage />
+                </Route>
+                <Route exact path = {'/collection/:id'}>
+                    <CollectionPage />
                 </Route>
                 <Route>
                     <ErrorPage />

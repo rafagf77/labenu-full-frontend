@@ -4,7 +4,7 @@ import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
 import { IconButton, Card, Button, Typography } from '@material-ui/core'
 import Axios from 'axios'
 import { grey, red } from '@material-ui/core/colors'
-import { goToFeedPage } from '../../router/Coordinator'
+import { goToCollectionPage } from '../../router/Coordinator'
 import { useHistory } from 'react-router-dom'
 import { BASE_URL } from '../../constants/URLs'
 import { ButtonStyled } from './styles'
@@ -91,7 +91,7 @@ const CollectionCard = (props) => {
                         </Typography>
                         <PostedContainer>
                             <PostedText>{props.subtitle}</PostedText>
-                            <ButtonStyled variant="contained" style={{ color: grey[50], backgroundColor: red[500] }} onClick={()=>ViewImages(props.id)}>Ver Álbum</ButtonStyled>
+                            <ButtonStyled variant="contained" style={{ color: grey[50], backgroundColor: red[500] }} onClick={()=> goToCollectionPage (history,props.id)}>Ver Álbum</ButtonStyled>
                             <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveCollection(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>
                     </Typography>

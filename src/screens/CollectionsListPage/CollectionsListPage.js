@@ -31,13 +31,14 @@ const CollectionsListPage = () => {
     }
     
     const GetAllCollections = () => {
-        Axios.get(`${BASE_URL}/collections/get/all`,
+        Axios.get(`${BASE_URL}/collections/all`,
         {
             headers: {
                 Authorization: localStorage.getItem("token")
             }
         })
         .then((res)=>{
+            console.log(res)
             setCollections(res.data.result)
         })
         .catch((err)=>{
