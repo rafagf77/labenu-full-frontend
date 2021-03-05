@@ -19,5 +19,9 @@ export const goToSignUpPage = (history) => {
 }
 
 export const goToCollectionsListPage = (history) => {
-    history.push('/collection')
+    history.push('/collections')
+}
+
+export const goToCollectionPage = (history, id) => {
+    history.push(`/collection/${id}`)
 }

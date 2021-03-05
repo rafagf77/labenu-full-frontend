@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 import { goToLoginPage, goToFeedPage, goToSignUpPage, goToPostPage, goToCollectionsListPage } from '../../router/Coordinator'
 import { NavBar, Options, Hello, Title, ButtonStyled, TitleContainer, TitleColor, SearchContainer } from './styles'
 import { AppBar, TextField, Grid } from '@material-ui/core'
@@ -13,6 +13,7 @@ const Header = (props) => {
     const history = useHistory()
     const token = localStorage.getItem("token")
     const nickname = localStorage.getItem("nickname")
+    
     const logout = () => {
         Swal.fire({
             title: 'Tem certeza?',
@@ -47,7 +48,7 @@ const Header = (props) => {
     return (
         <AppBar color="inherit" position="fixed">
                 {token ?
-                history.location.pathname==='/feed' ||  history.location.pathname==='/'?
+                    history.location.pathname==='/feed' ||  history.location.pathname==='/' ||  history.location.pathname.includes('collection/')?
                     <NavBar>
                         <TitleContainer onClick={()=> goToFeedPage(history)}>
                             <Title variant="h3">Insta</Title>
