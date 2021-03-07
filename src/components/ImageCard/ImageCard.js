@@ -4,7 +4,7 @@ import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
 import { IconButton, Card, Button, Typography } from '@material-ui/core'
 import Axios from 'axios'
 import { grey, red } from '@material-ui/core/colors'
-import { goToFeedPage } from '../../router/Coordinator'
+import { goToCollectionPage, goToFeedPage } from '../../router/Coordinator'
 import { useHistory } from 'react-router-dom'
 import { BASE_URL } from '../../constants/URLs'
 import { ButtonStyled } from './styles'
@@ -30,6 +30,7 @@ const ImageCard = (props) => {
             title: 'Tem certeza?',
             text: "Essa ação é irreversível!",
             icon: 'warning',
+            cancelButtonText: 'Cancelar',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -96,9 +97,8 @@ const ImageCard = (props) => {
                             })}
                             <PostedText>Álbuns</PostedText>
                             {props.collections && props.collections.map(collection => {
-                                return (<p onClick={()=>alert(`busca por ${collection}`)} key={collection}>{collection}</p>)
+                                return (<TagText onClick={()=>goToCollectionPage(history,`${collection.id}`)} key={collection}>{collection.title}</TagText>)
                             })}
-                            {/* <PostedText><b>{props.collection}</b></PostedText> */}
                             <ButtonStyled variant="contained" style={{ color: grey[50], backgroundColor: red[500] }} onClick={()=>AddCollection(props.id)}>+Álbum</ButtonStyled>
                             <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveImage(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>

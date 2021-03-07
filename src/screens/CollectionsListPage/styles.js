@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Fab } from '@material-ui/core'
 
-export const NewCommentContainer = styled.form `
+export const NewCollectionContainer = styled.form `
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -13,7 +13,7 @@ export const NewCommentContainer = styled.form `
     margin-bottom: 20px;
     min-height: 12vh;
 `
-export const CommentsContainer = styled.div `
+export const CollectionsContainer = styled.div `
     display: flex;
     flex-direction: column;
     background-color: #DBE0E6;
