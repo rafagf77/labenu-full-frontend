@@ -19,6 +19,7 @@ const Header = (props) => {
             title: 'Tem certeza?',
             text: "Esta ação encerrará a sessão atual",
             icon: 'warning',
+            cancelButtonText: 'Cancelar',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',

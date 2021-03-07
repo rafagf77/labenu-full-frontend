@@ -26,57 +26,41 @@ const CollectionCard = (props) => {
     }
 
     const RemoveCollection = (id) => {
-        // Swal.fire({
-        //     title: 'Tem certeza?',
-        //     text: "Essa ação é irreversível!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Sim, apagar!'
-        //   }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         Axios.delete(`${BASE_URL}/images/del/${id}`,
-        //         {
-        //             headers: {
-        //                 Authorization: localStorage.getItem("token")
-        //             }
-        //         })
-        //         .then((res)=>{
-        //             goToFeedPage(history)
-        //             Swal.fire(
-        //                 'Concluído!',
-        //                 'Sua imagem foi apagada.',
-        //                 'success'
-        //             )
-        //         })
-        //         .catch((err)=>{
-        //             console.log(err)
-        //             Swal.fire(
-        //                 'Problema!',
-        //                 'Sua imagem NÃO foi apagada.',
-        //                 'error'
-        //             )
-        //         })
-        //     }
-        //   })
-    }
-
-    const ViewImages = (id) => {
-        // if (window.confirm("Deseja apagar esta imagem?")){
-        //     Axios.delete(`${BASE_URL}/images/del/${id}`,
-        //     {
-        //         headers: {
-        //             Authorization: localStorage.getItem("token")
-        //         }
-        //     })
-        //     .then((res)=>{
-        //         goToFeedPage(history)
-        //     })
-        //     .catch((err)=>{
-        //         console.log(err)
-        //     })
-        // }
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Essa ação é irreversível!",
+            icon: 'warning',
+            cancelButtonText: 'Cancelar',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, apagar!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.delete(`${BASE_URL}/collections/del/${id}`,
+                {
+                    headers: {
+                        Authorization: localStorage.getItem("token")
+                    }
+                })
+                .then((res)=>{
+                    {props.getAllCollections()}
+                    Swal.fire(
+                        'Concluído!',
+                        'Seu álbum foi apagado.',
+                        'success'
+                    )
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    Swal.fire(
+                        'Problema!',
+                        'Seu álbum NÃO foi apagado.',
+                        'error'
+                    )
+                })
+            }
+          })
     }
 
     return (
@@ -91,6 +75,7 @@ const CollectionCard = (props) => {
                         </Typography>
                         <PostedContainer>
                             <PostedText>{props.subtitle}</PostedText>
+                            <PostedText>Criado {timeCalculator()}</PostedText>
                             <ButtonStyled variant="contained" style={{ color: grey[50], backgroundColor: red[500] }} onClick={()=> goToCollectionPage (history,props.id)}>Ver Álbum</ButtonStyled>
                             <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveCollection(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
 import { useForm } from '../../hooks/UseForm'
 import { useProtectedPage } from '../../hooks/UseProtectedPage'
-import { BackToTop, CommentsContainer, NewCommentContainer, PostPageContainer, Loading } from './styles'
+import { BackToTop, CommentsContainer, NewCommentContainer, PostPageContainer, Loading, NewPostContainer } from './styles'
 import { Button, TextField, Typography, CircularProgress } from '@material-ui/core'
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
@@ -16,6 +16,7 @@ import 'sweetalert2/src/sweetalert2.scss'
 const PostPage = () => {
     useProtectedPage()
     const history = useHistory()
+    const [collections, setCollections] = useState([])
     const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collections: "", tags: "" })
 
     const handleInputChange = (event) => {
@@ -25,11 +26,28 @@ const PostPage = () => {
 
     useEffect(()=>{
         topFunction()
+        GetAllCollections()
     },[])
 
     function topFunction() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
+    }
+
+    const GetAllCollections = () => {
+        Axios.get(`${BASE_URL}/collections/all`,
+        {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        })
+        .then((res)=>{
+            console.log(res.data.result)
+            setCollections(res.data.result)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
     }
 
     const SendImage = (event) => {
@@ -77,7 +95,7 @@ const PostPage = () => {
         <div>
             <Header />
                 <PostPageContainer>
-                <NewCommentContainer onSubmit={SendImage}>
+                <NewPostContainer onSubmit={SendImage}>
                     <TextField
                         name="subtitle"
                         value={form.subtitle}
@@ -114,6 +132,14 @@ const PostPage = () => {
                         placeholder="Escreva os nomes das etiquetas separados com espaço"
                     />
                     <p>Álbuns existentes</p>
+
+                    {collections && collections.sort((a, b) => a < b ? 1:-1).map(collection => {
+                        // return  (<input type="checkbox" id={collection.title} name={collection.title} value={collection.title}>
+                        // <label for={collection.title}> {collection.title}</label><br>)
+                        
+                        return (<p key={collection.title}>{collection.title}</p>)
+                    })}
+
                     <TextField
                         name="collections"
                         value={form.newCollection}
@@ -126,7 +152,7 @@ const PostPage = () => {
                         placeholder="Escreva o nome do novo álbum"
                     />
                     <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
-                </NewCommentContainer>
+                </NewPostContainer>
             </PostPageContainer>
         </div>
     )
