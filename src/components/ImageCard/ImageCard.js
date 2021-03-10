@@ -1,15 +1,16 @@
-import React from 'react'
-import { PostContainer, CountContainer, VotesContainer, ClickContainer, PostedContainer, PostedText, TagText } from './styles'
+import React, { useState } from 'react'
+import { PostContainer, ClickContainer, PostedContainer, PostedText, TagText } from './styles'
 import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
 import { IconButton, Card, Button, Typography } from '@material-ui/core'
 import Axios from 'axios'
 import { grey, red } from '@material-ui/core/colors'
-import { goToCollectionPage, goToFeedPage } from '../../router/Coordinator'
+import { goToCollectionPage, goToFeedPage, goToFilterPage } from '../../router/Coordinator'
 import { useHistory } from 'react-router-dom'
 import { BASE_URL } from '../../constants/URLs'
 import { ButtonStyled } from './styles'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import CollectionsListModal from '../Modal/CollectionsListModal'
 
 const ImageCard = (props) => {
     const history = useHistory()
@@ -44,7 +45,7 @@ const ImageCard = (props) => {
                     }
                 })
                 .then((res)=>{
-                    goToFeedPage(history)
+                    history.goBack()
                     Swal.fire(
                         'Concluído!',
                         'Sua imagem foi apagada.',
@@ -63,23 +64,6 @@ const ImageCard = (props) => {
           })
     }
 
-    const AddCollection = (id) => {
-        // if (window.confirm("Deseja apagar esta imagem?")){
-        //     Axios.delete(`${BASE_URL}/images/del/${id}`,
-        //     {
-        //         headers: {
-        //             Authorization: localStorage.getItem("token")
-        //         }
-        //     })
-        //     .then((res)=>{
-        //         goToFeedPage(history)
-        //     })
-        //     .catch((err)=>{
-        //         console.log(err)
-        //     })
-        // }
-    }
-
     return (
         <PostContainer>
             <Card variant="contained">
@@ -93,13 +77,13 @@ const ImageCard = (props) => {
                             <PostedText>Postado {timeCalculator()} por <b>{props.nickname}</b></PostedText>
                             <PostedText>Etiquetas</PostedText>
                             {props.tags && props.tags.map(tag => {
-                                return (<TagText onClick={()=>alert(`busca por ${tag}`)} key={tag}>{tag}</TagText>)
+                                return (<TagText onClick={()=>goToFilterPage(history,`${tag.id}`)} key={tag}>{tag.name}</TagText>)
                             })}
                             <PostedText>Álbuns</PostedText>
                             {props.collections && props.collections.map(collection => {
                                 return (<TagText onClick={()=>goToCollectionPage(history,`${collection.id}`)} key={collection}>{collection.title}</TagText>)
                             })}
-                            <ButtonStyled variant="contained" style={{ color: grey[50], backgroundColor: red[500] }} onClick={()=>AddCollection(props.id)}>+Álbum</ButtonStyled>
+                            <CollectionsListModal />
                             <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveImage(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>
                     </Typography>

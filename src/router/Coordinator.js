@@ -25,3 +25,7 @@ export const goToCollectionsListPage = (history) => {
 export const goToCollectionPage = (history, id) => {
     history.push(`/collection/${id}`)
 }
+
+export const goToFilterPage = (history, id) => {
+    history.push(`/filter/${id}`)
+}

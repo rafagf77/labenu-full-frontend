@@ -26,6 +26,7 @@ const CollectionCard = (props) => {
     }
 
     const RemoveCollection = (id) => {
+        console.log(id)
         Swal.fire({
             title: 'Tem certeza?',
             text: "Essa ação é irreversível!",
@@ -52,7 +53,7 @@ const CollectionCard = (props) => {
                     )
                 })
                 .catch((err)=>{
-                    console.log(err)
+                    console.log(err.message.data)
                     Swal.fire(
                         'Problema!',
                         'Seu álbum NÃO foi apagado.',

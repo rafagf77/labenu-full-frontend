@@ -8,6 +8,7 @@ import ImagePage from '../screens/ImagePage/ImagePage'
 import SignUpPage from '../screens/SignUpPage/SignUpPage'
 import CollectionsListPage from '../screens/CollectionsListPage/CollectionsListPage'
 import CollectionPage from '../screens/CollectionPage/CollectionPage'
+import FilterPage from '../screens/FilterPage/FilterPage'
 
 const Router = () => {
     return (    
@@ -33,6 +34,9 @@ const Router = () => {
                 </Route>
                 <Route exact path = {'/collection/:id'}>
                     <CollectionPage />
+                </Route>
+                <Route exact path = {'/filter/:id'}>
+                    <FilterPage />
                 </Route>
                 <Route>
                     <ErrorPage />

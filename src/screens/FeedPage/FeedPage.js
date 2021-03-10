@@ -55,18 +55,18 @@ const FeedPage = () => {
         setSearchContent(e.target.value)
     }
     
-    // let mybutton = document.getElementById("back-to-top")
-    // window.onscroll = function() {scrollFunction()}
+    let mybutton = document.getElementById("back-to-top")
+    window.onscroll = function() {scrollFunction()}
     
-    // function scrollFunction() {
-    //     if (posts.length>0) {
-    //         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    //             mybutton.style.display = "block"
-    //         } else {
-    //             mybutton.style.display = "none"
-    //         }
-    //     }
-    // }
+    function scrollFunction() {
+        if (posts.length>0) {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block"
+            } else {
+                mybutton.style.display = "none"
+            }
+        }
+    }
 
     function topFunction() {
         document.body.scrollTop = 0;
@@ -76,7 +76,7 @@ const FeedPage = () => {
     function updatePage() {
         GetPosts()
     }
-    console.log(posts)
+    
     return (
         <div>
             <Header onChangeSearch={SearchFilter}/>
@@ -125,9 +125,9 @@ const FeedPage = () => {
                             </div>   
                     }
                 </FeedContainer>
-                {/* <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
-                    <KeyboardArrowUp style={{ color: grey[50] }}/>
-                </BackToTop> */}
+                <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: grey[500] }}>
+                    <KeyboardArrowUp style={{ color: red[500] }}/>
+                </BackToTop>
             </FeedPageContainer>
         </div>
     )
