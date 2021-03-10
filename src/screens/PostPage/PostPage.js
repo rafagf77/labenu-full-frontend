@@ -2,27 +2,23 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
 import { useForm } from '../../hooks/UseForm'
 import { useProtectedPage } from '../../hooks/UseProtectedPage'
-import { BackToTop, CommentsContainer, NewCommentContainer, PostPageContainer, Loading, NewPostContainer } from './styles'
-import { Button, TextField, Typography, CircularProgress } from '@material-ui/core'
+import { PostPageContainer, NewPostContainer } from './styles'
+import { Button, TextField } from '@material-ui/core'
 import { grey, red } from '@material-ui/core/colors'
-import { KeyboardArrowUp } from '@material-ui/icons'
 import Axios from 'axios'
 import { BASE_URL } from '../../constants/URLs'
 import { goToFeedPage } from '../../router/Coordinator'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import CollectionModal from '../../components/Modal/CollectionModal'
 
 const PostPage = () => {
-    useProtectedPage()
-    const history = useHistory()
-    const [collections, setCollections] = useState([])
-    const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collections: "", tags: "" })
 
-    const handleInputChange = (event) => {
-        const { value, name } = event.target
-        onChange(value, name)
-    }
+    useProtectedPage()
 
     useEffect(()=>{
         topFunction()
@@ -34,6 +30,20 @@ const PostPage = () => {
         document.documentElement.scrollTop = 0;
     }
 
+    const history = useHistory()
+    const [collections, setCollections] = useState([])
+    const {form, onChange, resetState} = useForm({ subtitle: "", file: "", collections: "", tags: "" })
+    const [state, setState] = useState([{}]);
+
+    const handleInputChange = (event) => {
+        const { value, name } = event.target
+        onChange(value, name)
+    }
+    
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked })
+    }
+        
     const GetAllCollections = () => {
         Axios.get(`${BASE_URL}/collections/all`,
         {
@@ -42,7 +52,6 @@ const PostPage = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data.result)
             setCollections(res.data.result)
         })
         .catch((err)=>{
@@ -53,17 +62,26 @@ const PostPage = () => {
     const SendImage = (event) => {
         event.preventDefault()
 
-        let tags = form.tags.split(" ")
-        let i
-        for(i=0;i<tags.length;i++) {
-            tags[i]=tags[i].replace("#","")
-            tags[i]="#"+tags[i]
+        let formTags = form.tags.split(" ")
+        let tags = []
+        for(let i=0;i<formTags.length;i++) {
+            if(formTags[i]!==""){
+                formTags[i]=formTags[i].replace("#","")
+                tags.push("#"+formTags[i])
+            }
+        }
+        
+        let collectionsId = []
+        for(let key in state) {
+            if (state[key]===true){
+                collectionsId = [...collectionsId, key]
+            }
         }
 
         const body = {
                 "subtitle": form.subtitle,
                 "file": form.file,
-                "collections": form.newCollection,
+                "collections": collectionsId,
                 "tags": tags
         }
         Axios.post(`${BASE_URL}/images/post`, body,
@@ -82,7 +100,7 @@ const PostPage = () => {
             goToFeedPage(history)
         })
         .catch((err)=>{
-            console.log(err)
+            console.log(err.response.data)
             Swal.fire(
                 'Problema!',
                 'Sua imagem NÃO foi postada.',
@@ -134,16 +152,27 @@ const PostPage = () => {
                     <p>Álbuns existentes</p>
 
                     {collections && collections.sort((a, b) => a < b ? 1:-1).map(collection => {
-                        // return  (<input type="checkbox" id={collection.title} name={collection.title} value={collection.title}>
-                        // <label for={collection.title}> {collection.title}</label><br>)
-                        
-                        return (<p key={collection.title}>{collection.title}</p>)
+                        return(
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={
+                                    <Checkbox
+                                        checked={state.checked}
+                                        onChange={handleChange}
+                                        name={collection.id}
+                                        style={{ color: red[500] }}
+                                    />
+                                    }
+                                    label={collection.title}
+                                />
+                            </FormGroup>
+                        )
                     })}
 
-                    <TextField
-                        name="collections"
-                        value={form.newCollection}
-                        label="Novo Álbum"
+                    {/* <TextField
+                        name="title"
+                        value={form.title}
+                        label="Título"
                         variant="outlined"
                         color="primary"
                         style={{ backgroundColor: grey[50] }}
@@ -151,6 +180,20 @@ const PostPage = () => {
                         onChange={handleInputChange}
                         placeholder="Escreva o nome do novo álbum"
                     />
+                    <TextField
+                        name="subtitle"
+                        value={form.subtitle}
+                        label="Descrição"
+                        variant="outlined"
+                        color="primary"
+                        style={{ backgroundColor: grey[50] }}
+                        required
+                        onChange={handleInputChange}
+                        placeholder="Escreva a descrição do novo álbum"
+                    />                    
+                    <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Criar Álbum</Button> */}
+                    <CollectionModal getAllCollections={GetAllCollections}/>
+                    
                     <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
                 </NewPostContainer>
             </PostPageContainer>

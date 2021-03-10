@@ -38,7 +38,6 @@ const ImagePage = () => {
             }
         })
         .then((res)=>{
-            console.log(res.data)
             setPostDetails(res.data.result)
         })
         .catch((err)=>{
