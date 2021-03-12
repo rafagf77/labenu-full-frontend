@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
-import ImageCard from '../../components/ImageCard/ImageCard'
 import { useProtectedPage } from '../../hooks/UseProtectedPage'
 import { BackToTop, PostPageContainer, Loading } from './styles'
-import { Button, TextField, Typography, CircularProgress } from '@material-ui/core'
+import { Typography, CircularProgress } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
@@ -77,23 +76,23 @@ const CollectionPage = () => {
         setSearchContent(e.target.value)
     }
 
-    // let mybutton = document.getElementById("back-to-top")
-    // window.onscroll = function() {scrollFunction()}
+    let mybutton = document.getElementById("back-to-top")
+    window.onscroll = function() {scrollFunction()}
     
-    // function scrollFunction() {
-    //     if (postDetails.length===undefined) {
-    //             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    //                 mybutton.style.display = "block"
-    //             } else {
-    //                 mybutton.style.display = "none"
-    //             }
-    //     }
-    // }
+    function scrollFunction() {
+        if (posts!==undefined) {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block"
+                } else {
+                    mybutton.style.display = "none"
+                }
+        }
+    }
 
-    // function topFunction() {
-    //     document.body.scrollTop = 0;
-    //     document.documentElement.scrollTop = 0;
-    // }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
     return (
         <div>
@@ -149,9 +148,9 @@ const CollectionPage = () => {
                                 })}
                             </div>   
                     }
-                {/* <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
+                <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
                     <KeyboardArrowUp style={{ color: grey[50] }}/>
-                </BackToTop> */}
+                </BackToTop>
             </PostPageContainer>
         </div>
     )

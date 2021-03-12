@@ -12,14 +12,6 @@ export const PostContainer = styled.div `
     margin-bottom: 15px;
     padding: 15px;
 `
-export const CountContainer = styled.div `
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-`
-export const VotesContainer = styled.div `
-    display: flex;
-`
 export const ClickContainer = styled(CardContent)`
     cursor: pointer;
     &:hover {

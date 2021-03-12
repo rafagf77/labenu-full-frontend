@@ -11,12 +11,12 @@ import { grey,red } from '@material-ui/core/colors'
 import { BASE_URL } from '../../constants/URLs'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
-
+ 
 const SignUpPage = () => {
     useUnprotectedPage()
 
     const history = useHistory()
-    const {form, onChange, resetState} = useForm({ name: "", email: "", password: "", nickname: "" })
+    const {form, onChange} = useForm({ name: "", email: "", password: "", nickname: "" })
 
     const handleInputChange = (event) => {
         const { value, name } = event.target

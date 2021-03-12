@@ -13,11 +13,6 @@ export const NewCollectionContainer = styled.form `
     margin-bottom: 20px;
     min-height: 12vh;
 `
-export const CollectionsContainer = styled.div `
-    display: flex;
-    flex-direction: column;
-    background-color: #DBE0E6;
-`
 export const PostPageContainer = styled.div `
     display: flex;
     flex-direction: column;

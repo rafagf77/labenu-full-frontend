@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
-import ImageCard from '../../components/ImageCard/ImageCard'
 import { useProtectedPage } from '../../hooks/UseProtectedPage'
 import { NewCollectionContainer, BackToTop, PostPageContainer, Loading } from './styles'
 import { Button, TextField, Typography, CircularProgress } from '@material-ui/core'
-import { useParams } from 'react-router-dom'
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import Axios from 'axios'
 import { BASE_URL } from '../../constants/URLs'
-import Post from '../../components/Post/Post'
 import CollectionCard from '../../components/CollectionCard/CollectionCard'
 import { useForm } from '../../hooks/UseForm'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -21,7 +18,7 @@ const CollectionsListPage = () => {
     dayjs.extend(advancedFormat)
 
     useProtectedPage()
-    const [collections, setCollections] = useState([])
+    const [collections, setCollections] = useState(undefined)
     const {form, onChange, resetState} = useForm({ title: "", subtitle: "" })
 
     const handleInputChange = (event) => {
@@ -47,7 +44,6 @@ const CollectionsListPage = () => {
             }
         })
         .then((res)=>{
-            console.log(res)
             setCollections(res.data.result)
         })
         .catch((err)=>{
@@ -88,34 +84,65 @@ const CollectionsListPage = () => {
     }
 
 
-    // let mybutton = document.getElementById("back-to-top")
-    // window.onscroll = function() {scrollFunction()}
+    let mybutton = document.getElementById("back-to-top")
+    window.onscroll = function() {scrollFunction()}
     
-    // function scrollFunction() {
-    //     if (postDetails.length===undefined) {
-    //             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    //                 mybutton.style.display = "block"
-    //             } else {
-    //                 mybutton.style.display = "none"
-    //             }
-    //     }
-    // }
+    function scrollFunction() {
+        if (collections!==undefined) {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block"
+                } else {
+                    mybutton.style.display = "none"
+                }
+        }
+    }
 
-    // function topFunction() {
-    //     document.body.scrollTop = 0;
-    //     document.documentElement.scrollTop = 0;
-    // }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
 
     return (
         <div>
             <Header />
             <PostPageContainer>
-                {collections.length===0
+                {collections===undefined
                     ? 
                     <Loading>
                         <Typography variant="h5" style={{ color: red[500] }}>Carregando...</Typography>
                         <CircularProgress style={{ color: red[500] }}/>
                     </Loading>
+                    :
+                    collections.length===0
+                    ? 
+                    <div>
+                        <NewCollectionContainer>
+                            <TextField
+                                name="title"
+                                value={form.title}
+                                label="Título"
+                                variant="outlined"
+                                color="primary"
+                                style={{ backgroundColor: grey[50] }}
+                                required
+                                onChange={handleInputChange}
+                                placeholder="Escreva o nome do novo álbum"
+                            />
+                            <TextField
+                                name="subtitle"
+                                value={form.subtitle}
+                                label="Descrição"
+                                variant="outlined"
+                                color="primary"
+                                style={{ backgroundColor: grey[50] }}
+                                required
+                                onChange={handleInputChange}
+                                placeholder="Escreva a descrição do novo álbum"
+                            />
+                            <Button type="submit" onClick={AddCollection} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Criar Álbum</Button>
+                        </NewCollectionContainer>
+                        <p>Nenhum álbum existente</p>
+                    </div>
                     :
                     <div>
                         <NewCollectionContainer>
@@ -159,9 +186,9 @@ const CollectionsListPage = () => {
                     </div>
                 }
 
-                {/* <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
+                <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
                     <KeyboardArrowUp style={{ color: grey[50] }}/>
-                </BackToTop> */}
+                </BackToTop>
             </PostPageContainer>
         </div>
     )

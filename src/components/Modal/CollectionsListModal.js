@@ -3,12 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import { grey, red } from '@material-ui/core/colors'
-import { TextField } from "@material-ui/core";
-import { useForm } from "../../hooks/UseForm";
 import Axios from "axios";
 import { BASE_URL } from "../../constants/URLs";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
-import 'sweetalert2/src/sweetalert2.scss'
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -49,7 +45,6 @@ export default function CollectionsListModal(props) {
     const [collections, setCollections] = useState([])
     const [state, setState] = useState([{}]);
     
-    // console.log(props.id)
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
