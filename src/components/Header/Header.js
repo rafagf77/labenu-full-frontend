@@ -1,11 +1,10 @@
 import React from 'react'
-import { Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { goToLoginPage, goToFeedPage, goToSignUpPage, goToPostPage, goToCollectionsListPage } from '../../router/Coordinator'
 import { NavBar, Options, Hello, Title, ButtonStyled, TitleContainer, TitleColor, SearchContainer } from './styles'
 import { AppBar, TextField, Grid } from '@material-ui/core'
 import { red, grey } from '@material-ui/core/colors'
 import SearchIcon from '@material-ui/icons/Search'
-import { HistoryTwoTone } from '@material-ui/icons'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import 'sweetalert2/src/sweetalert2.scss'
 
@@ -31,12 +30,6 @@ const Header = (props) => {
             }
           })
     }
-
-    //     if(window.confirm("Deseja sair da área de acesso ao usuário?")){
-    //         localStorage.removeItem("token")
-    //         goToLoginPage(history)
-    //     }
-    // }
 
     const post = () => {
         goToPostPage(history)
@@ -65,7 +58,7 @@ const Header = (props) => {
                                     onChange={props.onChangeSearch}
                                     value={props.searchInput}
                                     id="input-with-icon-grid"
-                                    label="Busca por autor, título e etiquetas" />
+                                    label="Busca" />
                             </Grid>
                             </Grid>
                         </SearchContainer>
@@ -102,7 +95,6 @@ const Header = (props) => {
                 </NavBar>
                 }            
         </AppBar>
-
     )
 }
 

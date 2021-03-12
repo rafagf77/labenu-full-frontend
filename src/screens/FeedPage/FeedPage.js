@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header/Header'
 import Post from '../../components/Post/Post'
 import { useProtectedPage } from '../../hooks/UseProtectedPage'
-import { BackToTop, FeedContainer, FeedPageContainer, Loading, NewPostContainer } from './styles'
-import { Button, TextField, CircularProgress, Typography } from '@material-ui/core'
+import { BackToTop, FeedContainer, FeedPageContainer, Loading } from './styles'
+import { CircularProgress, Typography } from '@material-ui/core'
 import { grey, red } from '@material-ui/core/colors'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import { BASE_URL } from '../../constants/URLs'
@@ -125,8 +125,8 @@ const FeedPage = () => {
                             </div>   
                     }
                 </FeedContainer>
-                <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: grey[500] }}>
-                    <KeyboardArrowUp style={{ color: red[500] }}/>
+                <BackToTop onClick={topFunction} id="back-to-top" style={{ backgroundColor: red[500] }}>
+                    <KeyboardArrowUp style={{ color: grey[50] }}/>
                 </BackToTop>
             </FeedPageContainer>
         </div>

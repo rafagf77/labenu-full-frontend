@@ -12,19 +12,11 @@ export const PostContainer = styled.div `
     margin-bottom: 15px;
     padding: 15px;
 `
-export const CountContainer = styled.div `
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-`
-export const VotesContainer = styled.div `
-    display: flex;
-`
 export const ClickContainer = styled(CardContent)`
-    /* cursor: pointer;
+    /* cursor: pointer; */
     &:hover {
     background-color: lightgrey;
-    }; */
+    };
 `
 export const PostedContainer = styled.div `
     display: flex;
@@ -43,10 +35,6 @@ export const PostedText = styled.p `
         margin: 0;
         padding: 0;
     }
-`
-export const TagText = styled.a `
-    color:blue;
-    cursor: pointer;
 `
 export const ButtonStyled = styled(Button) `
     height: 4vh;

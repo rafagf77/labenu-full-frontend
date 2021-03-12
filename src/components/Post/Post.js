@@ -1,11 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { goToImagePage } from '../../router/Coordinator'
-import { PostContainer, CountContainer, VotesContainer, ClickContainer, PostedContainer, PostedText } from './styles'
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
-import { IconButton, Card, Typography } from '@material-ui/core'
-import Axios from 'axios'
-import { green, red } from '@material-ui/core/colors'
+import { PostContainer, ClickContainer, PostedContainer, PostedText } from './styles'
+import { Card, Typography } from '@material-ui/core'
 
 const Post = (props) => {
     const history = useHistory()
@@ -20,7 +17,7 @@ const Post = (props) => {
                 return 'há ' + ((Math.round(timeCalc/86400000)) - 1) + ' dias'
         } 
     }
-
+ 
     return (
         <PostContainer>
             <Card variant="contained">
