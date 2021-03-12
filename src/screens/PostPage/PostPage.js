@@ -22,7 +22,7 @@ const PostPage = () => {
 
     useEffect(()=>{
         topFunction()
-        GetAllCollections()
+        getAllCollections()
     },[])
 
     function topFunction() {
@@ -44,7 +44,7 @@ const PostPage = () => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
         
-    const GetAllCollections = () => {
+    const getAllCollections = () => {
         Axios.get(`${BASE_URL}/collections/all`,
         {
             headers: {
@@ -169,30 +169,7 @@ const PostPage = () => {
                         )
                     })}
 
-                    {/* <TextField
-                        name="title"
-                        value={form.title}
-                        label="Título"
-                        variant="outlined"
-                        color="primary"
-                        style={{ backgroundColor: grey[50] }}
-                        required
-                        onChange={handleInputChange}
-                        placeholder="Escreva o nome do novo álbum"
-                    />
-                    <TextField
-                        name="subtitle"
-                        value={form.subtitle}
-                        label="Descrição"
-                        variant="outlined"
-                        color="primary"
-                        style={{ backgroundColor: grey[50] }}
-                        required
-                        onChange={handleInputChange}
-                        placeholder="Escreva a descrição do novo álbum"
-                    />                    
-                    <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Criar Álbum</Button> */}
-                    <CollectionModal getAllCollections={GetAllCollections}/>
+                    <CollectionModal getAllCollections={getAllCollections}/>
                     
                     <Button type="submit" onClick={SendImage} variant="contained" style={{ color: grey[50], backgroundColor: red[500] }}>Postar imagem</Button>
                 </NewPostContainer>

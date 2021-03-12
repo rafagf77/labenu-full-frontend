@@ -83,7 +83,7 @@ const ImageCard = (props) => {
                             {props.collections && props.collections.map(collection => {
                                 return (<TagText onClick={()=>goToCollectionPage(history,`${collection.id}`)} key={collection}>{collection.title}</TagText>)
                             })}
-                            <CollectionsListModal />
+                            <CollectionsListModal id={props.id} collections={props.collections}/>
                             <ButtonStyled variant="outlined" style={{ color: red[500], borderColor: red[500] }} onClick={()=>RemoveImage(props.id)}>Remover</ButtonStyled>
                         </PostedContainer>
                     </Typography>
