@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CollectionModal() {
+export default function CollectionModal(props) {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
@@ -51,8 +51,6 @@ export default function CollectionModal() {
     }
 
     const AddCollection = (event) => {
-        handleClose()
-        
         event.preventDefault()
     
         const body = {
@@ -66,7 +64,7 @@ export default function CollectionModal() {
             }
         })
         .then((res)=>{
-            // {props.getAllCollections()}
+            
             Swal.fire(
                 'Concluído!',
                 'Seu álbum foi criado.',
@@ -82,6 +80,8 @@ export default function CollectionModal() {
                 'error'
             )
         })
+
+        handleClose()
     }
 
     const handleOpen = () => {
@@ -90,6 +90,7 @@ export default function CollectionModal() {
 
     const handleClose = () => {
         setOpen(false);
+        {props.getAllCollections()}
     };
 
     return (

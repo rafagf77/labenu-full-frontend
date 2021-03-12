@@ -42,20 +42,28 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function CollectionsListModal() {
+export default function CollectionsListModal(props) {
     const classes = useStyles();
     const [modalStyle] = React.useState(getModalStyle);
     const [open, setOpen] = React.useState(false);
     const [collections, setCollections] = useState([])
     const [state, setState] = useState([{}]);
+    
+    // console.log(props.id)
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked })
     }
     console.log("checkbox",state)
-
+    
     useEffect(()=>{
         GetAllCollections()
+        const collectionsId = props.collections === undefined ? [] : props.collections
+        for (let i=0;i<collectionsId.length;i++) {
+            setState({ ...state, [collectionsId[i].id]: true })
+            console.log(state)
+        }
+        console.log(collectionsId)
     },[])
 
     const GetAllCollections = () => {
@@ -66,7 +74,6 @@ export default function CollectionsListModal() {
             }
         })
         .then((res)=>{
-            console.log(res)
             setCollections(res.data.result)
         })
         .catch((err)=>{
