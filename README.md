@@ -19,7 +19,7 @@ http://full-dumont-rafael-fontes.surge.sh/
 - Tela de detalhes da imagem
 - Tela de listagem de álbuns e criação de novo álbum
 - Tela de detalhes do álbum com imagens contidas
-
+- Tela com imagens filtradas por etiqueta
 
 ## O que não funciona
 
