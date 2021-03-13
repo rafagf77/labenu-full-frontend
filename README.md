@@ -13,6 +13,10 @@ Escolha uma das opções abaixo
 http://full-dumont-rafael-fontes.surge.sh/
 
 ## O que funciona
+- Autenticação (telas de acesso e cadastro)
+- Tela de criação de imagem
+- Tela para ver imagens de todos usuários
+
 
 ## O que não funciona
 
