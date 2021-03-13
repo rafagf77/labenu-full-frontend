@@ -16,13 +16,16 @@ http://full-dumont-rafael-fontes.surge.sh/
 - Autenticação (telas de acesso e cadastro)
 - Tela de criação de imagem
 - Tela para ver imagens de todos usuários
+- Tela de detalhes da imagem
+- Tela de listagem de álbuns e criação de novo álbum
+- Tela de detalhes do álbum com imagens contidas
 
 
 ## O que não funciona
 
 ## O que falta implementar
 - Upload de arquivo de imagem
-- Busca de usuários
-- Perfil de usuários
+- Tela de usuários
+- Tela de perfil de usuário
 - Seguir e ser seguido
 - Feed apenas com imagens de pessoas seguidas
