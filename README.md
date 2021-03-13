@@ -17,3 +17,8 @@ http://full-dumont-rafael-fontes.surge.sh/
 ## O que não funciona
 
 ## O que falta implementar
+- Upload de arquivo de imagem
+- Busca de usuários
+- Perfil de usuários
+- Seguir e ser seguido
+- Feed apenas com imagens de pessoas seguidas
