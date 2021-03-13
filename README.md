@@ -23,6 +23,7 @@ http://full-dumont-rafael-fontes.surge.sh/
 
 ## O que não funciona
 - Adição/Remoção de álbum em imagem já postada
+- Responsividade dos Modais
 
 ## O que falta implementar
 - Upload de arquivo de imagem
