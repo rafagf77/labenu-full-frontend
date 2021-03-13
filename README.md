@@ -5,9 +5,13 @@ https://github.com/rafagf77/labenu-full-backend
 
 ## Como Usar
 No terminal executar o comando `npm run start`
+
 ou
+
 Fazer o deploy da aplicação
+
 ou
+
 Utilizar o link abaixo do Surge
 
 ## Link do Surge
